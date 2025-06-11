@@ -164,11 +164,22 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
   doorSealPrice = formData.doorSealCost * DCount;
 
   // Calculate glass variant prices
-  glassVariantPrice1 = formData.glassVariantPrice1 * squareFeet * (formData.glOnePercent / 100);
-  mattePrice1 = formData.mattePrice1 * squareFeet * (formData.glOnePercent / 100);
+  if (formData.glOnePercent > 0) {
+    glassVariantPrice1 = formData.glassVariantPrice1 * squareFeet * (formData.glOnePercent / 100);
+    mattePrice1 = formData.mattePrice1 * squareFeet * (formData.glOnePercent / 100);
+  } else {
+    glassVariantPrice1 = formData.glassVariantPrice1 * squareFeet;
+    mattePrice1 = formData.mattePrice1 * squareFeet;
+  }
+  console.log('glassVariantPrice1', glassVariantPrice1);
 
-  glassVariantPrice2 = formData.glassVariantPrice2 * squareFeet * (formData.glTwoPercent / 100);
-  mattePrice2 = formData.mattePrice2 * squareFeet * (formData.glTwoPercent / 100);
+  if (formData.glTwoPercent > 0) {
+    glassVariantPrice2 = formData.glassVariantPrice2 * squareFeet * (formData.glTwoPercent / 100);
+    mattePrice2 = formData.mattePrice2 * squareFeet * (formData.glTwoPercent / 100);
+  } else {
+    glassVariantPrice2 = formData.glassVariantPrice2 * squareFeet;
+    mattePrice2 = formData.mattePrice2 * squareFeet;
+  }
 
   // Calculate outer glass prices
   outerGlassVariantPrice = formData.outerVariantPrice * squareFeet;
