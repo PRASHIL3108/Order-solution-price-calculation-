@@ -26,7 +26,11 @@ export const GlassSizeManager: React.FC<GlassSizeManagerProps> = ({
     onChange(glassSizes.filter((_, i) => i !== index));
   };
 
-  const updateGlassSize = (index: number, field: keyof GlassSize, value: GlassSize[keyof GlassSize]) => {
+  const updateGlassSize = <T extends keyof GlassSize>(
+    index: number,
+    field: T,
+    value: GlassSize[T]
+  ) => {
     const updated = glassSizes.map((size, i) =>
       i === index ? { ...size, [field]: value } : size
     );
@@ -82,11 +86,11 @@ export const GlassSizeManager: React.FC<GlassSizeManagerProps> = ({
             />
           </div>
 
-          <RadioGroup
+          <RadioGroup<GlassSolutionDrawing>
             label="Drawing Type"
             options={drawingOptions}
             value={size.drawing}
-            onChange={(value) => updateGlassSize(index, 'drawing', value as GlassSolutionDrawing)}
+            onChange={(value) => updateGlassSize(index, 'drawing', value)}
           />
         </div>
       ))}

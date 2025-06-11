@@ -54,7 +54,7 @@ export interface FormData {
   designPatternCost: number;
   accessories: Accessory[];
   secFactor: number;
-  
+
   // Glass-specific fields
   glassFactor: number;
   customFactor: number;
@@ -72,7 +72,7 @@ export interface CalculationResult {
     lockPrice: number;
     handlePrice: number;
     doorCloserPrice: number;
-    dropSealPrice: number;
+    doorSealPrice: number;
     glassVariantPrice1: number;
     glassVariantPrice2: number;
     mattePrice1: number;
@@ -84,7 +84,7 @@ export interface CalculationResult {
     totalBeforeFactor: number;
     factor: number;
     secFactor: number;
-    
+
     // Glass-specific breakdown
     glassFinishPrice1?: number;
     totalGlassPrice?: number;

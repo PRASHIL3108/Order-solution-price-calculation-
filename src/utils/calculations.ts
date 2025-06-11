@@ -13,7 +13,7 @@ export function calculatePrice(formData: FormData): CalculationResult {
         lockPrice: 0,
         handlePrice: 0,
         doorCloserPrice: 0,
-        dropSealPrice: 0,
+        doorSealPrice: 0,
         glassVariantPrice1: 0,
         glassVariantPrice2: 0,
         mattePrice1: 0,
@@ -66,21 +66,21 @@ function calculateGlassOrder(formData: FormData): CalculationResult {
   // Calculate total square feet from glass sizes
   if (formData.glassSizes && formData.glassSizes.length > 0) {
     for (const element of formData.glassSizes) {
-      const customFactorMultiplier = element.drawing === GlassSolutionDrawing.CUSTOM 
-        ? 1 + (formData.customFactor / 100) 
+      const customFactorMultiplier = element.drawing === GlassSolutionDrawing.CUSTOM
+        ? 1 + (formData.customFactor / 100)
         : 1;
-      
+
       const areaSquareMillimeters = element.height * element.width;
       const squareFeet = 0.00001076391042 * areaSquareMillimeters;
       const chargeableSqft = Math.max(minSqftPrice, squareFeet);
-      
+
       totalSqft += Number((chargeableSqft * element.quantity * customFactorMultiplier).toFixed(2));
     }
   } else {
     // Fallback to single size calculation
     const areaSquareMillimeters = formData.width * formData.height;
-    const squareFeet = formData.chargeBy === ChargeBy.SQFT 
-      ? formData.squareFeet 
+    const squareFeet = formData.chargeBy === ChargeBy.SQFT
+      ? formData.squareFeet
       : 0.00001076391042 * areaSquareMillimeters;
     totalSqft = Math.max(minSqftPrice, squareFeet);
   }
@@ -102,7 +102,7 @@ function calculateGlassOrder(formData: FormData): CalculationResult {
       lockPrice: 0,
       handlePrice: 0,
       doorCloserPrice: 0,
-      dropSealPrice: 0,
+      doorSealPrice: 0,
       glassVariantPrice1: glassVariantPrice,
       glassVariantPrice2: 0,
       mattePrice1: formData.matte1 ? mattePrice : 0,
@@ -128,7 +128,7 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
   let lockPrice = 0;
   let handlePrice = 0;
   let doorCloserPrice = 0;
-  let dropSealPrice = 0;
+  let doorSealPrice = 0;
   let glassVariantPrice1 = 0;
   let glassVariantPrice2 = 0;
   let mattePrice1 = 0;
@@ -149,8 +149,8 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
 
   // Calculate square feet
   const areaSquareMillimeters = formData.width * formData.height;
-  const squareFeet = formData.chargeBy === ChargeBy.SQFT 
-    ? formData.squareFeet 
+  const squareFeet = formData.chargeBy === ChargeBy.SQFT
+    ? formData.squareFeet
     : 0.00001076391042 * areaSquareMillimeters;
 
   // Calculate profile price
@@ -161,12 +161,12 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
   lockPrice = formData.lockPrice;
   handlePrice = formData.handlePrice * DCount;
   doorCloserPrice = formData.doorCloserCost * DCount;
-  dropSealPrice = formData.doorSealCost * DCount;
+  doorSealPrice = formData.doorSealCost * DCount;
 
   // Calculate glass variant prices
   glassVariantPrice1 = formData.glassVariantPrice1 * squareFeet * (formData.glOnePercent / 100);
   mattePrice1 = formData.mattePrice1 * squareFeet * (formData.glOnePercent / 100);
-  
+
   glassVariantPrice2 = formData.glassVariantPrice2 * squareFeet * (formData.glTwoPercent / 100);
   mattePrice2 = formData.mattePrice2 * squareFeet * (formData.glTwoPercent / 100);
 
@@ -185,9 +185,9 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
   }
 
   // Calculate total before factors
-  const totalBeforeFactor = profilePrice + hardwarePrice + glassVariantPrice1 + mattePrice1 + 
-    glassVariantPrice2 + mattePrice2 + outerGlassVariantPrice + outerGlassMattePrice + 
-    designPrice + handlePrice + lockPrice + doorCloserPrice + dropSealPrice + accessoriesPrice;
+  const totalBeforeFactor = profilePrice + hardwarePrice + glassVariantPrice1 + mattePrice1 +
+    glassVariantPrice2 + mattePrice2 + outerGlassVariantPrice + outerGlassMattePrice +
+    designPrice + handlePrice + lockPrice + doorCloserPrice + doorSealPrice + accessoriesPrice;
 
   // Apply factors
   const finalAmount = totalBeforeFactor * formData.factor * formData.secFactor;
@@ -201,7 +201,7 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
       lockPrice,
       handlePrice,
       doorCloserPrice,
-      dropSealPrice,
+      doorSealPrice,
       glassVariantPrice1,
       glassVariantPrice2,
       mattePrice1,
