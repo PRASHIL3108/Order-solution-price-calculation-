@@ -57,6 +57,7 @@ function App() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  console.log('formData', formData);
   useEffect(() => {
     const calculatedResult = calculatePrice(formData);
     setResult(calculatedResult);

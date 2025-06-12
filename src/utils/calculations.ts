@@ -147,62 +147,98 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
   const FCost = FCount * formData.fixedpartitionCost;
   hardwarePrice = DCost + FCost;
 
+  console.log('hardwarePrice', hardwarePrice);
+
   // Calculate square feet
   const areaSquareMillimeters = formData.width * formData.height;
+
+  console.log('areaSquareMillimeters', areaSquareMillimeters);
+
   const squareFeet = formData.chargeBy === ChargeBy.SQFT
     ? formData.squareFeet
     : 0.00001076391042 * areaSquareMillimeters;
 
+  console.log('squareFeet', squareFeet);
+
   // Calculate profile price
   const minSqft = Math.max(formData.minProfileSqFeetCost, squareFeet);
+
+  console.log('minSqft', minSqft);
+
   profilePrice = formData.profileCost * minSqft;
+
+  console.log('profilePrice', profilePrice);
 
   // Calculate individual prices
   lockPrice = formData.lockPrice;
+  console.log('lockPrice', lockPrice);
   handlePrice = formData.handlePrice * DCount;
+  console.log('handlePrice', handlePrice);
   doorCloserPrice = formData.doorCloserCost * DCount;
+  console.log('doorCloserPrice', doorCloserPrice);
   doorSealPrice = formData.doorSealCost * DCount;
+  console.log('doorSealPrice', doorSealPrice);
 
   // Calculate glass variant prices
   if (formData.glOnePercent > 0) {
     glassVariantPrice1 = formData.glassVariantPrice1 * squareFeet * (formData.glOnePercent / 100);
     mattePrice1 = formData.mattePrice1 * squareFeet * (formData.glOnePercent / 100);
+    console.log('glassVariantPrice1', glassVariantPrice1);
+    console.log('mattePrice1', mattePrice1);
   } else {
     glassVariantPrice1 = formData.glassVariantPrice1 * squareFeet;
     mattePrice1 = formData.mattePrice1 * squareFeet;
+
+    console.log('glassVariantPrice1', glassVariantPrice1);
+    console.log('mattePrice1', mattePrice1);
+
   }
-  console.log('glassVariantPrice1', glassVariantPrice1);
 
   if (formData.glTwoPercent > 0) {
     glassVariantPrice2 = formData.glassVariantPrice2 * squareFeet * (formData.glTwoPercent / 100);
     mattePrice2 = formData.mattePrice2 * squareFeet * (formData.glTwoPercent / 100);
+    console.log('glassVariantPrice2', glassVariantPrice2);
+    console.log('mattePrice2', mattePrice2);
   } else {
     glassVariantPrice2 = formData.glassVariantPrice2 * squareFeet;
     mattePrice2 = formData.mattePrice2 * squareFeet;
+    console.log('glassVariantPrice2', glassVariantPrice2);
+    console.log('mattePrice2', mattePrice2);
   }
 
   // Calculate outer glass prices
   outerGlassVariantPrice = formData.outerVariantPrice * squareFeet;
   outerGlassMattePrice = formData.outerGlassMattePrice * squareFeet;
 
+  console.log('outerGlassVariantPrice', outerGlassVariantPrice);
+  console.log('outerGlassMattePrice', outerGlassMattePrice);
+
   // Calculate design price
   designPrice = formData.designPatternCost * squareFeet;
+
+  console.log('designPrice', designPrice);
 
   // Calculate accessories price
   if (formData.accessories && formData.accessories.length > 0) {
     accessoriesPrice = formData.accessories.reduce((total, accessory) => {
       return total + (accessory.accVariantPrice * accessory.quantity);
     }, 0);
+    console.log('accessoriesPrice', accessoriesPrice);
   }
+
 
   // Calculate total before factors
   const totalBeforeFactor = profilePrice + hardwarePrice + glassVariantPrice1 + mattePrice1 +
     glassVariantPrice2 + mattePrice2 + outerGlassVariantPrice + outerGlassMattePrice +
     designPrice + handlePrice + lockPrice + doorCloserPrice + doorSealPrice + accessoriesPrice;
 
+  console.log('totalBeforeFactor', totalBeforeFactor);
+
   // Apply factors
   const finalAmount = totalBeforeFactor * formData.factor * formData.secFactor;
   const finalSolutionPrice = Math.floor(finalAmount);
+
+  console.log('finalSolutionPrice', finalSolutionPrice);
 
   return {
     finalSolutionPrice,
