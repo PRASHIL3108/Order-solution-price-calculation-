@@ -66,7 +66,7 @@ function App() {
   const categoryOptions = [
     { value: Category.WALTZ, label: 'Waltz' },
     { value: Category.GLASS, label: 'Glass' },
-    { value: Category.ACCESSORY, label: 'Accessory' }
+    // { value: Category.ACCESSORY, label: 'Accessory' }
   ];
 
   const chargeByOptions = [
