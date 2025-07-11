@@ -46,6 +46,94 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ result }) => {
         </div>
       </div>
 
+      {/* SqFt Breakdown */}
+      <div className="bg-white rounded-lg p-4 border border-blue-200 mb-4">
+        <h4 className="font-semibold text-blue-700 mb-2">Square Feet Calculation</h4>
+        <div className="space-y-1 text-sm">
+          <div className="flex justify-between">
+            <span>Calculated SqFt:</span>
+            <span className="font-medium">{breakdown.calculatedSquareFeet?.toFixed(2) ?? '-'}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Minimum SqFt:</span>
+            <span className="font-medium">{breakdown.minSquareFeet?.toFixed(2) ?? '-'}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Chargeable SqFt:</span>
+            <span className="font-medium">{breakdown.chargeableSquareFeet?.toFixed(2) ?? '-'}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Step-by-step Calculation Breakdown */}
+      <div className="bg-white rounded-lg p-4 border border-gray-200">
+        <h4 className="font-semibold text-gray-800 mb-3">Calculation Steps</h4>
+        <div className="space-y-2 text-sm">
+          <div className="flex justify-between">
+            <span>Profile Price:</span>
+            <span className="font-medium">{formatCurrency(breakdown.profilePrice)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Hardware Price:</span>
+            <span className="font-medium">{formatCurrency(breakdown.hardwarePrice)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Glass Variant 1:</span>
+            <span className="font-medium">{formatCurrency(breakdown.glassVariantPrice1)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Matte Price 1:</span>
+            <span className="font-medium">{formatCurrency(breakdown.mattePrice1)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Glass Variant 2:</span>
+            <span className="font-medium">{formatCurrency(breakdown.glassVariantPrice2)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Matte Price 2:</span>
+            <span className="font-medium">{formatCurrency(breakdown.mattePrice2)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Outer Glass Variant:</span>
+            <span className="font-medium">{formatCurrency(breakdown.outerGlassVariantPrice)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Outer Glass Matte:</span>
+            <span className="font-medium">{formatCurrency(breakdown.outerGlassMattePrice)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Design Price:</span>
+            <span className="font-medium">{formatCurrency(breakdown.designPrice)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Accessories Price:</span>
+            <span className="font-medium">{formatCurrency(breakdown.accessoriesPrice)}</span>
+          </div>
+          <div className="flex justify-between border-t pt-2">
+            <span>Total Before Factor:</span>
+            <span className="font-medium">{formatCurrency(breakdown.totalBeforeFactor)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Primary Factor:</span>
+            <span className="font-medium">{breakdown.factor}x</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Secondary Factor:</span>
+            <span className="font-medium">{breakdown.secFactor}x</span>
+          </div>
+          {breakdown.totalGlassPrice !== undefined && (
+            <div className="flex justify-between">
+              <span>Total Glass Price (after factors):</span>
+              <span className="font-medium">{formatCurrency(breakdown.totalGlassPrice)}</span>
+            </div>
+          )}
+          <div className="flex justify-between border-t pt-2 font-bold text-green-700">
+            <span>Final Solution Price:</span>
+            <span>{formatCurrency(result.finalSolutionPrice)}</span>
+          </div>
+        </div>
+      </div>
+
       {/* Detailed Breakdown */}
       <div className="space-y-4">
         <div className="flex items-center gap-2 mb-4">

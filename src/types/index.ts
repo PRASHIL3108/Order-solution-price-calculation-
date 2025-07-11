@@ -89,5 +89,10 @@ export interface CalculationResult {
     glassFinishPrice1?: number;
     totalGlassPrice?: number;
     glassFactor?: number;
+
+    // SqFt breakdown
+    calculatedSquareFeet?: number;
+    minSquareFeet?: number;
+    chargeableSquareFeet?: number;
   };
 }
