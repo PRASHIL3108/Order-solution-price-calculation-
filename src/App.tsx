@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Calculator, Info, ArrowRight, CheckCircle } from 'lucide-react';
 import { FormData, Category, ChargeBy, CalculationResult, AccessoryOnlyFormData } from './types';
 import { calculatePrice, calculateAccessoryOnlyPrice } from './utils/calculations';
