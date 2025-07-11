@@ -1,4 +1,4 @@
-import { FormData, CalculationResult, ChargeBy, Category, GlassSolutionDrawing } from '../types';
+import { FormData, CalculationResult, ChargeBy, Category, GlassSolutionDrawing, AccessoryOnlyFormData } from '../types';
 
 const SUBFRAME_SUBTRACK_BASE_RATE = 29500;
 
@@ -236,4 +236,28 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
       chargeableSquareFeet,
     }
   };
+}
+
+export async function calculateAccessoryOnlyPrice(
+  accessoryOnlyData: AccessoryOnlyFormData
+): Promise<number> {
+  let accessoryOnlyPrice = 0;
+  let accessoryOnlyFinalPrice = 0;
+  let accessoryOnlyFactorPrice = 0;
+
+  // Use glassPrice directly
+  if (accessoryOnlyData) {
+    accessoryOnlyPrice = accessoryOnlyData.glassPrice * accessoryOnlyData.quantity;
+  }
+
+  // Use factor from form
+  accessoryOnlyFactorPrice = accessoryOnlyData.accessoryFactor;
+
+  // Use secondary factor from form
+  const secFactor = parseFloat(accessoryOnlyData.secondaryFactor) || 1;
+
+  const acceOnlyPrice = accessoryOnlyPrice * accessoryOnlyFactorPrice * secFactor;
+  accessoryOnlyFinalPrice = Math.floor(acceOnlyPrice);
+
+  return accessoryOnlyFinalPrice;
 }

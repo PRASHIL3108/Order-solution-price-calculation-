@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calculator, Info } from 'lucide-react';
 import { CalculationResult } from '../types';
+import { Category } from '../types';
 
 interface ResultsDisplayProps {
   result: CalculationResult;
@@ -17,7 +18,44 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ result }) => {
   };
 
   const breakdown = result.breakdown;
-  const isGlassCalculation = breakdown.totalGlassPrice !== undefined;
+  const isAccessoryOnly = breakdown.category === Category.ACCESSORY_ONLY;
+
+  if (isAccessoryOnly) {
+    return (
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl shadow-lg p-6 border border-blue-200">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-2 bg-blue-600 rounded-lg">
+            <Calculator className="text-white" size={24} />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900">Accessory Only Price Calculation</h2>
+        </div>
+        <div className="bg-white rounded-xl p-6 mb-6 border-2 border-blue-200">
+          <div className="flex flex-col gap-2 items-center">
+            <div className="flex justify-between w-full max-w-xs">
+              <span>Glass Price:</span>
+              <span className="font-medium">{formatCurrency(breakdown.glassVariantPrice1)}</span>
+            </div>
+            <div className="flex justify-between w-full max-w-xs">
+              <span>Accessory Factor:</span>
+              <span className="font-medium">{breakdown.factor}x</span>
+            </div>
+            <div className="flex justify-between w-full max-w-xs">
+              <span>Secondary Factor:</span>
+              <span className="font-medium">{breakdown.secFactor}x</span>
+            </div>
+            <div className="flex justify-between w-full max-w-xs">
+              <span>Quantity:</span>
+              <span className="font-medium">{breakdown.quantity ?? ''}</span>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="text-lg font-bold text-green-700">Final Solution Price:</span>
+          <span className="text-3xl font-bold text-green-600">{formatCurrency(result.finalSolutionPrice)}</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl shadow-lg p-6 border border-blue-200">
@@ -141,7 +179,7 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ result }) => {
           <h3 className="text-lg font-semibold text-gray-800">Detailed Calculation Breakdown</h3>
         </div>
 
-        {isGlassCalculation ? (
+        {breakdown.totalGlassPrice !== undefined ? (
           // Glass-specific breakdown
           <div className="space-y-4">
             <div className="bg-white rounded-lg p-4 border border-gray-200">

@@ -1,7 +1,7 @@
 export enum Category {
   WALTZ = 'waltz',
   GLASS = 'glass',
-  ACCESSORY = 'accessory'
+  ACCESSORY_ONLY = 'accessory_only',
 }
 
 export enum ChargeBy {
@@ -94,5 +94,51 @@ export interface CalculationResult {
     calculatedSquareFeet?: number;
     minSquareFeet?: number;
     chargeableSquareFeet?: number;
+
+    // Category for result display
+    category?: Category;
+    // Quantity for Accessory Only
+    quantity?: number;
   };
+}
+
+export interface AccessoryOnlyDetail {
+  glassVariantId1?: string;
+  glassFinishId1?: string;
+  quantity: number;
+}
+
+export interface PV_VariantsEntity {
+  variantId: string;
+  price: string;
+}
+
+export interface PV_FinishesEntity {
+  finishId: string;
+  price: string;
+}
+
+export interface PV_HandlesEntity {
+  handleId: string;
+  price: number;
+}
+
+export interface PV_GeneralSettingsEntity {
+  accessoryOnlyFactor: string;
+  secondaryFactors?: Record<string, string>;
+  [key: string]: string | Record<string, string> | undefined;
+}
+
+export interface PricingVersionModelSchemaEntity {
+  variants: PV_VariantsEntity[];
+  finishes: PV_FinishesEntity[];
+  handles: PV_HandlesEntity[];
+  generalSettings: PV_GeneralSettingsEntity;
+}
+
+export interface AccessoryOnlyFormData {
+  accessoryFactor: number;
+  glassPrice: number;
+  secondaryFactor: string;
+  quantity: number;
 }
