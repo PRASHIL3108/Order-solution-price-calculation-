@@ -170,6 +170,9 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
   doorCloserPrice = formData.doorCloserCost * DCount;
   doorSealPrice = formData.doorSealCost * DCount;
 
+  // Calculate frame color price (multiplied with chargeableSquareFeet)
+  const frameColorPrice = formData.frameColorPrice * chargeableSquareFeet;
+
   // Calculate glass variant prices
   if (formData.glOnePercent > 0) {
     glassVariantPrice1 = formData.glassVariantPrice1 * calculatedSquareFeet * (formData.glOnePercent / 100);
@@ -204,7 +207,7 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
   // Calculate total before factors
   const totalBeforeFactor = profilePrice + hardwarePrice + glassVariantPrice1 + mattePrice1 +
     glassVariantPrice2 + mattePrice2 + outerGlassVariantPrice + outerGlassMattePrice +
-    designPrice + handlePrice + lockPrice + doorCloserPrice + doorSealPrice + accessoriesPrice;
+    designPrice + handlePrice + lockPrice + doorCloserPrice + doorSealPrice + frameColorPrice + accessoriesPrice;
 
   // Apply factors
   const finalAmount = totalBeforeFactor * formData.factor * formData.secFactor;
@@ -228,6 +231,7 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
       outerGlassMattePrice,
       designPrice,
       accessoriesPrice,
+      frameColorPrice,
       totalBeforeFactor,
       factor: formData.factor,
       secFactor: formData.secFactor,

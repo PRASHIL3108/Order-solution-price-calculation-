@@ -147,6 +147,10 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ result }) => {
             <span>Accessories Price:</span>
             <span className="font-medium">{formatCurrency(breakdown.accessoriesPrice)}</span>
           </div>
+          <div className="flex justify-between">
+            <span>Frame Color Price:</span>
+            <span className="font-medium">{formatCurrency(breakdown.frameColorPrice || 0)}</span>
+          </div>
           <div className="flex justify-between border-t pt-2">
             <span>Total Before Factor:</span>
             <span className="font-medium">{formatCurrency(breakdown.totalBeforeFactor)}</span>

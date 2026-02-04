@@ -54,6 +54,7 @@ export interface FormData {
   designPatternCost: number;
   accessories: Accessory[];
   secFactor: number;
+  frameColorPrice: number;
 
   // Glass-specific fields
   glassFactor: number;
@@ -81,6 +82,7 @@ export interface CalculationResult {
     outerGlassMattePrice: number;
     designPrice: number;
     accessoriesPrice: number;
+    frameColorPrice?: number;
     totalBeforeFactor: number;
     factor: number;
     secFactor: number;

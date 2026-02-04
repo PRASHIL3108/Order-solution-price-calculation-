@@ -38,6 +38,7 @@ const initialFormData: FormData = {
   designPatternCost: 0,
   accessories: [],
   secFactor: 1,
+  frameColorPrice: 0,
   glassFactor: 1,
   customFactor: 0,
   glassFinishPrice1: 0,
@@ -462,6 +463,12 @@ function App() {
                           value={formData.doorSealCost}
                           onChange={(value) => updateFormData('doorSealCost', parseFloat(value) || 0)}
                           placeholder="Door seal cost per door"
+                        />
+                        <InputField
+                          label="Frame Color Price (₹)"
+                          value={formData.frameColorPrice}
+                          onChange={(value) => updateFormData('frameColorPrice', parseFloat(value) || 0)}
+                          placeholder="Frame color cost per sqft"
                         />
                       </div>
                     </FormSection>
