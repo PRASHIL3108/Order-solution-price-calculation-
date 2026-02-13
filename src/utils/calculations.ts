@@ -171,7 +171,7 @@ function calculateStandardOrder(formData: FormData): CalculationResult {
   doorSealPrice = formData.doorSealCost * DCount;
 
   // Calculate frame color price (multiplied with chargeableSquareFeet)
-  const frameColorPrice = formData.frameColorPrice * chargeableSquareFeet;
+  const frameColorPrice = formData.frameColorPrice * calculatedSquareFeet;
 
   // Calculate glass variant prices
   if (formData.glOnePercent > 0) {
